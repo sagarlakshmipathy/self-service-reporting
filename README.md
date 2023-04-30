@@ -1,6 +1,23 @@
 
 # Reader focused Self-Service Reporting in Amazon QuickSight!
 
+## About the project
+Today, readers cannot custom reports (tables) QuickSight or for that matter it is not possible in a lot of tools. You can however use AWS services and QuickSight public APIs to create a system that lets you generate reports as a reader.
+
+This system uses QuickSight Dashboard as a UI to show you the list of columns from a metadata dataset. This frontend dashboard lets users to select the columns they want to see in the target table. 
+
+After the users choose the column names they want to include in the final table, they are expected to hit a `Submit` button. This action is tied to a navigation action which triggers an API call to pass these column names to AWS Lambda. The Lambda function then uses these columns to create a table on demand and creates a new dashboard and deploy it in QuickSight.
+
+After the dashboard creation, the Lambda function redirects readers to the new dashboard i.e. `AdhocReport`, to provide a seamless reader experience in QuickSight. Readers can use the new dashboard to create any number of tables as they wish by selecting the columns and submitting to Lambda.
+
+Here is the high level overview of the architecture:
+
+
+
+
+
+## Deployment steps
+
 This repoository helps admins setup self service reporting capability for their readers.
 
 The `cdk.json` file tells the CDK Toolkit how to execute your app.
@@ -79,7 +96,7 @@ To add additional dependencies, for example other CDK libraries, just add
 them to your `setup.py` file and rerun the `pip install -r requirements.txt`
 command.
 
-## Useful commands
+### Useful commands
 
  * `cdk ls`          list all stacks in the app
  * `cdk synth`       emits the synthesized CloudFormation template
@@ -87,4 +104,4 @@ command.
  * `cdk diff`        compare deployed stack with current state
  * `cdk docs`        open CDK documentation
 
-Enjoy!
+ Enjoy!
