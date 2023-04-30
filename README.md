@@ -1,16 +1,16 @@
 
-# Welcome to your CDK Python project!
+# Reader focused Self-Service Reporting in Amazon QuickSight!
 
-You should explore the contents of this project. It demonstrates a CDK app with an instance of a stack (`self_service_reporting_stack`)
-which contains an Amazon SQS queue that is subscribed to an Amazon SNS topic.
+This repoository helps admins setup self service reporting capability for their readers.
 
 The `cdk.json` file tells the CDK Toolkit how to execute your app.
 
-This project is set up like a standard Python project.  The initialization process also creates
-a virtualenv within this project, stored under the .venv directory.  To create the virtualenv
-it assumes that there is a `python3` executable in your path with access to the `venv` package.
-If for any reason the automatic creation of the virtualenv fails, you can create the virtualenv
-manually once the init process completes.
+This project is set up like a standard Python project.  The initialization
+process also creates a virtualenv within this project, stored under the `.venv`
+directory.  To create the virtualenv it assumes that there is a `python3`
+(or `python` for Windows) executable in your path with access to the `venv`
+package. If for any reason the automatic creation of the virtualenv fails,
+you can create the virtualenv manually.
 
 To manually create a virtualenv on MacOS and Linux:
 
@@ -37,21 +37,46 @@ Once the virtualenv is activated, you can install the required dependencies.
 $ pip install -r requirements.txt
 ```
 
-At this point you can now synthesize the CloudFormation template for this code.
+Once you have installed the requirements.txt file, you need to verify if you have the pre-requisite packages for CDK
+
+```
+$ node -v
+$ cdk --version
+$ python --version
+```
+
+If need be, install
+
+```
+$ sudo yum install npm
+```
+```
+$ nvm install 16
+```
+```
+$ npm install -g aws-cdk
+```
+```
+$ curl "https://awscli.amazonaws.com/awscli-exe-linux-x86_64.zip" -o "awscliv2.zip"
+$ unzip awscliv2.zip
+$ sudo ./aws/install
+```
+
+At this point you can now synthesize the CloudFormation template for this code. CDK CLI requires you to be in the same folder as cdk.json is present.
 
 ```
 $ cdk synth
 ```
 
-You can now begin exploring the source code, contained in the hello directory.
-There is also a very trivial test included that can be run like this:
-
 ```
-$ pytest
+$ cdk bootstrap
+```
+```
+$ cdk deploy --all
 ```
 
-To add additional dependencies, for example other CDK libraries, just add to
-your requirements.txt file and rerun the `pip install -r requirements.txt`
+To add additional dependencies, for example other CDK libraries, just add
+them to your `setup.py` file and rerun the `pip install -r requirements.txt`
 command.
 
 ## Useful commands
