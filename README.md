@@ -2,7 +2,7 @@
 # Reader focused Self-Service Reporting in Amazon QuickSight!
 
 ## About the project
-Today, readers cannot custom reports (tables) QuickSight or for that matter it is not possible in a lot of tools. You can however use AWS services and QuickSight public APIs to create a system that lets you generate reports as a reader.
+Today, readers cannot custom reports (tables) in QuickSight or for that matter it is not possible in a lot of tools. You can however use AWS services and QuickSight public APIs to create a system that lets you generate reports as a reader.
 
 This system uses QuickSight Dashboard as a UI to show you the list of columns from a metadata dataset. This frontend dashboard lets users to select the columns they want to see in the target table. 
 
