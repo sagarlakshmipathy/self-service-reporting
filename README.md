@@ -12,8 +12,7 @@ After the dashboard creation, the Lambda function redirects readers to the new d
 
 Here is the high level overview of the architecture:
 
-
-
+<img width="1398" alt="image" src="https://user-images.githubusercontent.com/30472234/235336933-cb0bc542-3e75-49b2-b3de-acb7a6fa656e.png">
 
 
 ## Deployment steps
