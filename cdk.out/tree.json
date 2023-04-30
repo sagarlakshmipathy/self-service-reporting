@@ -1,0 +1,1288 @@
+{
+  "version": "tree-0.1",
+  "tree": {
+    "id": "App",
+    "path": "",
+    "children": {
+      "AuthenticationStack": {
+        "id": "AuthenticationStack",
+        "path": "AuthenticationStack",
+        "children": {
+          "UserPool": {
+            "id": "UserPool",
+            "path": "AuthenticationStack/UserPool",
+            "children": {
+              "Resource": {
+                "id": "Resource",
+                "path": "AuthenticationStack/UserPool/Resource",
+                "attributes": {
+                  "aws:cdk:cloudformation:type": "AWS::Cognito::UserPool",
+                  "aws:cdk:cloudformation:props": {
+                    "accountRecoverySetting": {
+                      "recoveryMechanisms": [
+                        {
+                          "name": "verified_phone_number",
+                          "priority": 1
+                        },
+                        {
+                          "name": "verified_email",
+                          "priority": 2
+                        }
+                      ]
+                    },
+                    "adminCreateUserConfig": {
+                      "allowAdminCreateUserOnly": true
+                    },
+                    "autoVerifiedAttributes": [
+                      "email"
+                    ],
+                    "emailVerificationMessage": "The verification code to your new account is {####}",
+                    "emailVerificationSubject": "Verify your new account",
+                    "smsVerificationMessage": "The verification code to your new account is {####}",
+                    "usernameAttributes": [
+                      "email"
+                    ],
+                    "verificationMessageTemplate": {
+                      "defaultEmailOption": "CONFIRM_WITH_CODE",
+                      "emailMessage": "The verification code to your new account is {####}",
+                      "emailSubject": "Verify your new account",
+                      "smsMessage": "The verification code to your new account is {####}"
+                    }
+                  }
+                },
+                "constructInfo": {
+                  "fqn": "aws-cdk-lib.aws_cognito.CfnUserPool",
+                  "version": "2.77.0"
+                }
+              },
+              "UserPoolClient": {
+                "id": "UserPoolClient",
+                "path": "AuthenticationStack/UserPool/UserPoolClient",
+                "children": {
+                  "Resource": {
+                    "id": "Resource",
+                    "path": "AuthenticationStack/UserPool/UserPoolClient/Resource",
+                    "attributes": {
+                      "aws:cdk:cloudformation:type": "AWS::Cognito::UserPoolClient",
+                      "aws:cdk:cloudformation:props": {
+                        "userPoolId": {
+                          "Ref": "UserPool6BA7E5F2"
+                        },
+                        "allowedOAuthFlows": [
+                          "implicit",
+                          "code"
+                        ],
+                        "allowedOAuthFlowsUserPoolClient": true,
+                        "allowedOAuthScopes": [
+                          "profile",
+                          "phone",
+                          "email",
+                          "openid",
+                          "aws.cognito.signin.user.admin"
+                        ],
+                        "callbackUrLs": [
+                          "https://example.com"
+                        ],
+                        "explicitAuthFlows": [
+                          "ALLOW_ADMIN_USER_PASSWORD_AUTH",
+                          "ALLOW_CUSTOM_AUTH",
+                          "ALLOW_USER_SRP_AUTH",
+                          "ALLOW_REFRESH_TOKEN_AUTH"
+                        ],
+                        "generateSecret": true,
+                        "supportedIdentityProviders": [
+                          "COGNITO"
+                        ]
+                      }
+                    },
+                    "constructInfo": {
+                      "fqn": "aws-cdk-lib.aws_cognito.CfnUserPoolClient",
+                      "version": "2.77.0"
+                    }
+                  }
+                },
+                "constructInfo": {
+                  "fqn": "aws-cdk-lib.aws_cognito.UserPoolClient",
+                  "version": "2.77.0"
+                }
+              },
+              "UserPoolDomain": {
+                "id": "UserPoolDomain",
+                "path": "AuthenticationStack/UserPool/UserPoolDomain",
+                "children": {
+                  "Resource": {
+                    "id": "Resource",
+                    "path": "AuthenticationStack/UserPool/UserPoolDomain/Resource",
+                    "attributes": {
+                      "aws:cdk:cloudformation:type": "AWS::Cognito::UserPoolDomain",
+                      "aws:cdk:cloudformation:props": {
+                        "domain": {
+                          "Fn::Join": [
+                            "",
+                            [
+                              "self-service-reporting-domain-",
+                              {
+                                "Ref": "AWS::AccountId"
+                              }
+                            ]
+                          ]
+                        },
+                        "userPoolId": {
+                          "Ref": "UserPool6BA7E5F2"
+                        }
+                      }
+                    },
+                    "constructInfo": {
+                      "fqn": "aws-cdk-lib.aws_cognito.CfnUserPoolDomain",
+                      "version": "2.77.0"
+                    }
+                  }
+                },
+                "constructInfo": {
+                  "fqn": "aws-cdk-lib.aws_cognito.UserPoolDomain",
+                  "version": "2.77.0"
+                }
+              }
+            },
+            "constructInfo": {
+              "fqn": "aws-cdk-lib.aws_cognito.UserPool",
+              "version": "2.77.0"
+            }
+          },
+          "UserPoolClientId": {
+            "id": "UserPoolClientId",
+            "path": "AuthenticationStack/UserPoolClientId",
+            "constructInfo": {
+              "fqn": "aws-cdk-lib.CfnOutput",
+              "version": "2.77.0"
+            }
+          },
+          "UserPoolDomainUrl": {
+            "id": "UserPoolDomainUrl",
+            "path": "AuthenticationStack/UserPoolDomainUrl",
+            "constructInfo": {
+              "fqn": "aws-cdk-lib.CfnOutput",
+              "version": "2.77.0"
+            }
+          },
+          "UserPoolId": {
+            "id": "UserPoolId",
+            "path": "AuthenticationStack/UserPoolId",
+            "constructInfo": {
+              "fqn": "aws-cdk-lib.CfnOutput",
+              "version": "2.77.0"
+            }
+          },
+          "CDKMetadata": {
+            "id": "CDKMetadata",
+            "path": "AuthenticationStack/CDKMetadata",
+            "children": {
+              "Default": {
+                "id": "Default",
+                "path": "AuthenticationStack/CDKMetadata/Default",
+                "constructInfo": {
+                  "fqn": "aws-cdk-lib.CfnResource",
+                  "version": "2.77.0"
+                }
+              },
+              "Condition": {
+                "id": "Condition",
+                "path": "AuthenticationStack/CDKMetadata/Condition",
+                "constructInfo": {
+                  "fqn": "aws-cdk-lib.CfnCondition",
+                  "version": "2.77.0"
+                }
+              }
+            },
+            "constructInfo": {
+              "fqn": "constructs.Construct",
+              "version": "10.2.10"
+            }
+          },
+          "BootstrapVersion": {
+            "id": "BootstrapVersion",
+            "path": "AuthenticationStack/BootstrapVersion",
+            "constructInfo": {
+              "fqn": "aws-cdk-lib.CfnParameter",
+              "version": "2.77.0"
+            }
+          },
+          "CheckBootstrapVersion": {
+            "id": "CheckBootstrapVersion",
+            "path": "AuthenticationStack/CheckBootstrapVersion",
+            "constructInfo": {
+              "fqn": "aws-cdk-lib.CfnRule",
+              "version": "2.77.0"
+            }
+          }
+        },
+        "constructInfo": {
+          "fqn": "aws-cdk-lib.Stack",
+          "version": "2.77.0"
+        }
+      },
+      "BackendStack": {
+        "id": "BackendStack",
+        "path": "BackendStack",
+        "children": {
+          "LambdaSelfServiceReportingRole": {
+            "id": "LambdaSelfServiceReportingRole",
+            "path": "BackendStack/LambdaSelfServiceReportingRole",
+            "children": {
+              "ImportLambdaSelfServiceReportingRole": {
+                "id": "ImportLambdaSelfServiceReportingRole",
+                "path": "BackendStack/LambdaSelfServiceReportingRole/ImportLambdaSelfServiceReportingRole",
+                "constructInfo": {
+                  "fqn": "aws-cdk-lib.Resource",
+                  "version": "2.77.0"
+                }
+              },
+              "Resource": {
+                "id": "Resource",
+                "path": "BackendStack/LambdaSelfServiceReportingRole/Resource",
+                "attributes": {
+                  "aws:cdk:cloudformation:type": "AWS::IAM::Role",
+                  "aws:cdk:cloudformation:props": {
+                    "assumeRolePolicyDocument": {
+                      "Statement": [
+                        {
+                          "Action": "sts:AssumeRole",
+                          "Effect": "Allow",
+                          "Principal": {
+                            "Service": "lambda.amazonaws.com"
+                          }
+                        }
+                      ],
+                      "Version": "2012-10-17"
+                    }
+                  }
+                },
+                "constructInfo": {
+                  "fqn": "aws-cdk-lib.aws_iam.CfnRole",
+                  "version": "2.77.0"
+                }
+              }
+            },
+            "constructInfo": {
+              "fqn": "aws-cdk-lib.aws_iam.Role",
+              "version": "2.77.0"
+            }
+          },
+          "LambdaSelfServiceReportingPolicy": {
+            "id": "LambdaSelfServiceReportingPolicy",
+            "path": "BackendStack/LambdaSelfServiceReportingPolicy",
+            "children": {
+              "ImportedLambdaSelfServiceReportingPolicy": {
+                "id": "ImportedLambdaSelfServiceReportingPolicy",
+                "path": "BackendStack/LambdaSelfServiceReportingPolicy/ImportedLambdaSelfServiceReportingPolicy",
+                "constructInfo": {
+                  "fqn": "aws-cdk-lib.Resource",
+                  "version": "2.77.0"
+                }
+              },
+              "Resource": {
+                "id": "Resource",
+                "path": "BackendStack/LambdaSelfServiceReportingPolicy/Resource",
+                "attributes": {
+                  "aws:cdk:cloudformation:type": "AWS::IAM::ManagedPolicy",
+                  "aws:cdk:cloudformation:props": {
+                    "policyDocument": {
+                      "Statement": [
+                        {
+                          "Action": [
+                            "logs:*",
+                            "quicksight:*"
+                          ],
+                          "Effect": "Allow",
+                          "Resource": "*"
+                        }
+                      ],
+                      "Version": "2012-10-17"
+                    },
+                    "description": "",
+                    "managedPolicyName": "LambdaSelfServiceReportingPolicy",
+                    "path": "/",
+                    "roles": [
+                      {
+                        "Ref": "LambdaSelfServiceReportingRole723F2C55"
+                      }
+                    ]
+                  }
+                },
+                "constructInfo": {
+                  "fqn": "aws-cdk-lib.aws_iam.CfnManagedPolicy",
+                  "version": "2.77.0"
+                }
+              }
+            },
+            "constructInfo": {
+              "fqn": "aws-cdk-lib.aws_iam.ManagedPolicy",
+              "version": "2.77.0"
+            }
+          },
+          "SelfServiceReportingFunction": {
+            "id": "SelfServiceReportingFunction",
+            "path": "BackendStack/SelfServiceReportingFunction",
+            "children": {
+              "Code": {
+                "id": "Code",
+                "path": "BackendStack/SelfServiceReportingFunction/Code",
+                "children": {
+                  "Stage": {
+                    "id": "Stage",
+                    "path": "BackendStack/SelfServiceReportingFunction/Code/Stage",
+                    "constructInfo": {
+                      "fqn": "aws-cdk-lib.AssetStaging",
+                      "version": "2.77.0"
+                    }
+                  },
+                  "AssetBucket": {
+                    "id": "AssetBucket",
+                    "path": "BackendStack/SelfServiceReportingFunction/Code/AssetBucket",
+                    "constructInfo": {
+                      "fqn": "aws-cdk-lib.aws_s3.BucketBase",
+                      "version": "2.77.0"
+                    }
+                  }
+                },
+                "constructInfo": {
+                  "fqn": "aws-cdk-lib.aws_s3_assets.Asset",
+                  "version": "2.77.0"
+                }
+              },
+              "Resource": {
+                "id": "Resource",
+                "path": "BackendStack/SelfServiceReportingFunction/Resource",
+                "attributes": {
+                  "aws:cdk:cloudformation:type": "AWS::Lambda::Function",
+                  "aws:cdk:cloudformation:props": {
+                    "code": {
+                      "s3Bucket": {
+                        "Fn::Sub": "cdk-hnb659fds-assets-${AWS::AccountId}-${AWS::Region}"
+                      },
+                      "s3Key": "252592da6920ccad61138189e413285ccb226805fb13ec7cdc28c60287e0f62e.zip"
+                    },
+                    "role": {
+                      "Fn::GetAtt": [
+                        "LambdaSelfServiceReportingRole723F2C55",
+                        "Arn"
+                      ]
+                    },
+                    "environment": {
+                      "variables": {
+                        "CognitoClientId": {
+                          "Fn::ImportValue": "UserPoolClientId"
+                        },
+                        "CognitoDomainUrl": {
+                          "Fn::Join": [
+                            "",
+                            [
+                              "https://",
+                              {
+                                "Fn::ImportValue": "UserPoolDomainUrl"
+                              },
+                              ".auth.us-east-1.amazoncognito.com"
+                            ]
+                          ]
+                        }
+                      }
+                    },
+                    "functionName": "self-service-reporting-function",
+                    "handler": "lambda_function.lambda_handler",
+                    "runtime": "python3.9",
+                    "timeout": 60
+                  }
+                },
+                "constructInfo": {
+                  "fqn": "aws-cdk-lib.aws_lambda.CfnFunction",
+                  "version": "2.77.0"
+                }
+              }
+            },
+            "constructInfo": {
+              "fqn": "aws-cdk-lib.aws_lambda.Function",
+              "version": "2.77.0"
+            }
+          },
+          "ApiGateway": {
+            "id": "ApiGateway",
+            "path": "BackendStack/ApiGateway",
+            "children": {
+              "Resource": {
+                "id": "Resource",
+                "path": "BackendStack/ApiGateway/Resource",
+                "attributes": {
+                  "aws:cdk:cloudformation:type": "AWS::ApiGateway::RestApi",
+                  "aws:cdk:cloudformation:props": {
+                    "description": "This is the gateway to create the self service reports in QuickSight",
+                    "name": "self-service-reporting-api"
+                  }
+                },
+                "constructInfo": {
+                  "fqn": "aws-cdk-lib.aws_apigateway.CfnRestApi",
+                  "version": "2.77.0"
+                }
+              },
+              "Deployment": {
+                "id": "Deployment",
+                "path": "BackendStack/ApiGateway/Deployment",
+                "children": {
+                  "Resource": {
+                    "id": "Resource",
+                    "path": "BackendStack/ApiGateway/Deployment/Resource",
+                    "attributes": {
+                      "aws:cdk:cloudformation:type": "AWS::ApiGateway::Deployment",
+                      "aws:cdk:cloudformation:props": {
+                        "restApiId": {
+                          "Ref": "ApiGateway11E7F47B"
+                        },
+                        "description": "This is the gateway to create the self service reports in QuickSight"
+                      }
+                    },
+                    "constructInfo": {
+                      "fqn": "aws-cdk-lib.aws_apigateway.CfnDeployment",
+                      "version": "2.77.0"
+                    }
+                  }
+                },
+                "constructInfo": {
+                  "fqn": "aws-cdk-lib.aws_apigateway.Deployment",
+                  "version": "2.77.0"
+                }
+              },
+              "DeploymentStage.Dev": {
+                "id": "DeploymentStage.Dev",
+                "path": "BackendStack/ApiGateway/DeploymentStage.Dev",
+                "children": {
+                  "Resource": {
+                    "id": "Resource",
+                    "path": "BackendStack/ApiGateway/DeploymentStage.Dev/Resource",
+                    "attributes": {
+                      "aws:cdk:cloudformation:type": "AWS::ApiGateway::Stage",
+                      "aws:cdk:cloudformation:props": {
+                        "restApiId": {
+                          "Ref": "ApiGateway11E7F47B"
+                        },
+                        "deploymentId": {
+                          "Ref": "ApiGatewayDeploymentA26796E8e9288350ac64aa4cb6003e5e9f82cea1"
+                        },
+                        "stageName": "Dev"
+                      }
+                    },
+                    "constructInfo": {
+                      "fqn": "aws-cdk-lib.aws_apigateway.CfnStage",
+                      "version": "2.77.0"
+                    }
+                  }
+                },
+                "constructInfo": {
+                  "fqn": "aws-cdk-lib.aws_apigateway.Stage",
+                  "version": "2.77.0"
+                }
+              },
+              "Endpoint": {
+                "id": "Endpoint",
+                "path": "BackendStack/ApiGateway/Endpoint",
+                "constructInfo": {
+                  "fqn": "aws-cdk-lib.CfnOutput",
+                  "version": "2.77.0"
+                }
+              },
+              "Default": {
+                "id": "Default",
+                "path": "BackendStack/ApiGateway/Default",
+                "children": {
+                  "qs-self-service-reporting-api": {
+                    "id": "qs-self-service-reporting-api",
+                    "path": "BackendStack/ApiGateway/Default/qs-self-service-reporting-api",
+                    "children": {
+                      "Resource": {
+                        "id": "Resource",
+                        "path": "BackendStack/ApiGateway/Default/qs-self-service-reporting-api/Resource",
+                        "attributes": {
+                          "aws:cdk:cloudformation:type": "AWS::ApiGateway::Resource",
+                          "aws:cdk:cloudformation:props": {
+                            "parentId": {
+                              "Fn::GetAtt": [
+                                "ApiGateway11E7F47B",
+                                "RootResourceId"
+                              ]
+                            },
+                            "pathPart": "qs-self-service-reporting-api",
+                            "restApiId": {
+                              "Ref": "ApiGateway11E7F47B"
+                            }
+                          }
+                        },
+                        "constructInfo": {
+                          "fqn": "aws-cdk-lib.aws_apigateway.CfnResource",
+                          "version": "2.77.0"
+                        }
+                      },
+                      "GET": {
+                        "id": "GET",
+                        "path": "BackendStack/ApiGateway/Default/qs-self-service-reporting-api/GET",
+                        "children": {
+                          "ApiPermission.BackendStackApiGatewayA1281C47.GET..qs-self-service-reporting-api": {
+                            "id": "ApiPermission.BackendStackApiGatewayA1281C47.GET..qs-self-service-reporting-api",
+                            "path": "BackendStack/ApiGateway/Default/qs-self-service-reporting-api/GET/ApiPermission.BackendStackApiGatewayA1281C47.GET..qs-self-service-reporting-api",
+                            "attributes": {
+                              "aws:cdk:cloudformation:type": "AWS::Lambda::Permission",
+                              "aws:cdk:cloudformation:props": {
+                                "action": "lambda:InvokeFunction",
+                                "functionName": {
+                                  "Fn::GetAtt": [
+                                    "SelfServiceReportingFunctionB468C934",
+                                    "Arn"
+                                  ]
+                                },
+                                "principal": "apigateway.amazonaws.com",
+                                "sourceArn": {
+                                  "Fn::Join": [
+                                    "",
+                                    [
+                                      "arn:",
+                                      {
+                                        "Ref": "AWS::Partition"
+                                      },
+                                      ":execute-api:",
+                                      {
+                                        "Ref": "AWS::Region"
+                                      },
+                                      ":",
+                                      {
+                                        "Ref": "AWS::AccountId"
+                                      },
+                                      ":",
+                                      {
+                                        "Ref": "ApiGateway11E7F47B"
+                                      },
+                                      "/",
+                                      {
+                                        "Ref": "ApiGatewayDeploymentStageDev501B0D1A"
+                                      },
+                                      "/GET/qs-self-service-reporting-api"
+                                    ]
+                                  ]
+                                }
+                              }
+                            },
+                            "constructInfo": {
+                              "fqn": "aws-cdk-lib.aws_lambda.CfnPermission",
+                              "version": "2.77.0"
+                            }
+                          },
+                          "Resource": {
+                            "id": "Resource",
+                            "path": "BackendStack/ApiGateway/Default/qs-self-service-reporting-api/GET/Resource",
+                            "attributes": {
+                              "aws:cdk:cloudformation:type": "AWS::ApiGateway::Method",
+                              "aws:cdk:cloudformation:props": {
+                                "httpMethod": "GET",
+                                "resourceId": {
+                                  "Ref": "ApiGatewayqsselfservicereportingapi93329D00"
+                                },
+                                "restApiId": {
+                                  "Ref": "ApiGateway11E7F47B"
+                                },
+                                "authorizationType": "NONE",
+                                "integration": {
+                                  "type": "AWS_PROXY",
+                                  "uri": {
+                                    "Fn::Join": [
+                                      "",
+                                      [
+                                        "arn:",
+                                        {
+                                          "Ref": "AWS::Partition"
+                                        },
+                                        ":apigateway:",
+                                        {
+                                          "Ref": "AWS::Region"
+                                        },
+                                        ":lambda:path/2015-03-31/functions/",
+                                        {
+                                          "Fn::GetAtt": [
+                                            "SelfServiceReportingFunctionB468C934",
+                                            "Arn"
+                                          ]
+                                        },
+                                        "/invocations"
+                                      ]
+                                    ]
+                                  },
+                                  "integrationHttpMethod": "POST",
+                                  "integrationResponses": [
+                                    {
+                                      "statusCode": "200",
+                                      "responseParameters": {
+                                        "method.response.header.Access-Control-Allow-Origin": "'*'"
+                                      },
+                                      "responseTemplates": {
+                                        "application/json": "Empty"
+                                      }
+                                    }
+                                  ]
+                                },
+                                "methodResponses": [
+                                  {
+                                    "statusCode": "200",
+                                    "responseParameters": {
+                                      "method.response.header.Access-Control-Allow-Origin": true
+                                    },
+                                    "responseModels": {
+                                      "application/json": "Empty"
+                                    }
+                                  }
+                                ]
+                              }
+                            },
+                            "constructInfo": {
+                              "fqn": "aws-cdk-lib.aws_apigateway.CfnMethod",
+                              "version": "2.77.0"
+                            }
+                          }
+                        },
+                        "constructInfo": {
+                          "fqn": "aws-cdk-lib.aws_apigateway.Method",
+                          "version": "2.77.0"
+                        }
+                      }
+                    },
+                    "constructInfo": {
+                      "fqn": "aws-cdk-lib.aws_apigateway.Resource",
+                      "version": "2.77.0"
+                    }
+                  }
+                },
+                "constructInfo": {
+                  "fqn": "aws-cdk-lib.aws_apigateway.ResourceBase",
+                  "version": "2.77.0"
+                }
+              }
+            },
+            "constructInfo": {
+              "fqn": "aws-cdk-lib.aws_apigateway.RestApi",
+              "version": "2.77.0"
+            }
+          },
+          "ApiGatewayUrl": {
+            "id": "ApiGatewayUrl",
+            "path": "BackendStack/ApiGatewayUrl",
+            "constructInfo": {
+              "fqn": "aws-cdk-lib.CfnOutput",
+              "version": "2.77.0"
+            }
+          },
+          "CDKMetadata": {
+            "id": "CDKMetadata",
+            "path": "BackendStack/CDKMetadata",
+            "children": {
+              "Default": {
+                "id": "Default",
+                "path": "BackendStack/CDKMetadata/Default",
+                "constructInfo": {
+                  "fqn": "aws-cdk-lib.CfnResource",
+                  "version": "2.77.0"
+                }
+              },
+              "Condition": {
+                "id": "Condition",
+                "path": "BackendStack/CDKMetadata/Condition",
+                "constructInfo": {
+                  "fqn": "aws-cdk-lib.CfnCondition",
+                  "version": "2.77.0"
+                }
+              }
+            },
+            "constructInfo": {
+              "fqn": "constructs.Construct",
+              "version": "10.2.10"
+            }
+          },
+          "BootstrapVersion": {
+            "id": "BootstrapVersion",
+            "path": "BackendStack/BootstrapVersion",
+            "constructInfo": {
+              "fqn": "aws-cdk-lib.CfnParameter",
+              "version": "2.77.0"
+            }
+          },
+          "CheckBootstrapVersion": {
+            "id": "CheckBootstrapVersion",
+            "path": "BackendStack/CheckBootstrapVersion",
+            "constructInfo": {
+              "fqn": "aws-cdk-lib.CfnRule",
+              "version": "2.77.0"
+            }
+          }
+        },
+        "constructInfo": {
+          "fqn": "aws-cdk-lib.Stack",
+          "version": "2.77.0"
+        }
+      },
+      "FrontendStack": {
+        "id": "FrontendStack",
+        "path": "FrontendStack",
+        "children": {
+          "SSRDashboardDeploymentRole": {
+            "id": "SSRDashboardDeploymentRole",
+            "path": "FrontendStack/SSRDashboardDeploymentRole",
+            "children": {
+              "ImportSSRDashboardDeploymentRole": {
+                "id": "ImportSSRDashboardDeploymentRole",
+                "path": "FrontendStack/SSRDashboardDeploymentRole/ImportSSRDashboardDeploymentRole",
+                "constructInfo": {
+                  "fqn": "aws-cdk-lib.Resource",
+                  "version": "2.77.0"
+                }
+              },
+              "Resource": {
+                "id": "Resource",
+                "path": "FrontendStack/SSRDashboardDeploymentRole/Resource",
+                "attributes": {
+                  "aws:cdk:cloudformation:type": "AWS::IAM::Role",
+                  "aws:cdk:cloudformation:props": {
+                    "assumeRolePolicyDocument": {
+                      "Statement": [
+                        {
+                          "Action": "sts:AssumeRole",
+                          "Effect": "Allow",
+                          "Principal": {
+                            "Service": "lambda.amazonaws.com"
+                          }
+                        }
+                      ],
+                      "Version": "2012-10-17"
+                    }
+                  }
+                },
+                "constructInfo": {
+                  "fqn": "aws-cdk-lib.aws_iam.CfnRole",
+                  "version": "2.77.0"
+                }
+              }
+            },
+            "constructInfo": {
+              "fqn": "aws-cdk-lib.aws_iam.Role",
+              "version": "2.77.0"
+            }
+          },
+          "SSRDashboardDeploymentPolicy": {
+            "id": "SSRDashboardDeploymentPolicy",
+            "path": "FrontendStack/SSRDashboardDeploymentPolicy",
+            "children": {
+              "Resource": {
+                "id": "Resource",
+                "path": "FrontendStack/SSRDashboardDeploymentPolicy/Resource",
+                "attributes": {
+                  "aws:cdk:cloudformation:type": "AWS::IAM::Policy",
+                  "aws:cdk:cloudformation:props": {
+                    "policyDocument": {
+                      "Statement": [
+                        {
+                          "Action": [
+                            "logs:*",
+                            "quicksight:*"
+                          ],
+                          "Effect": "Allow",
+                          "Resource": "*"
+                        }
+                      ],
+                      "Version": "2012-10-17"
+                    },
+                    "policyName": "SSRDashboardDeploymentPolicyD193DE5F",
+                    "roles": [
+                      {
+                        "Ref": "SSRDashboardDeploymentRoleC1F47D0F"
+                      }
+                    ]
+                  }
+                },
+                "constructInfo": {
+                  "fqn": "aws-cdk-lib.aws_iam.CfnPolicy",
+                  "version": "2.77.0"
+                }
+              }
+            },
+            "constructInfo": {
+              "fqn": "aws-cdk-lib.aws_iam.Policy",
+              "version": "2.77.0"
+            }
+          },
+          "SSRDashboardDeploymentFunction": {
+            "id": "SSRDashboardDeploymentFunction",
+            "path": "FrontendStack/SSRDashboardDeploymentFunction",
+            "children": {
+              "Code": {
+                "id": "Code",
+                "path": "FrontendStack/SSRDashboardDeploymentFunction/Code",
+                "children": {
+                  "Stage": {
+                    "id": "Stage",
+                    "path": "FrontendStack/SSRDashboardDeploymentFunction/Code/Stage",
+                    "constructInfo": {
+                      "fqn": "aws-cdk-lib.AssetStaging",
+                      "version": "2.77.0"
+                    }
+                  },
+                  "AssetBucket": {
+                    "id": "AssetBucket",
+                    "path": "FrontendStack/SSRDashboardDeploymentFunction/Code/AssetBucket",
+                    "constructInfo": {
+                      "fqn": "aws-cdk-lib.aws_s3.BucketBase",
+                      "version": "2.77.0"
+                    }
+                  }
+                },
+                "constructInfo": {
+                  "fqn": "aws-cdk-lib.aws_s3_assets.Asset",
+                  "version": "2.77.0"
+                }
+              },
+              "Resource": {
+                "id": "Resource",
+                "path": "FrontendStack/SSRDashboardDeploymentFunction/Resource",
+                "attributes": {
+                  "aws:cdk:cloudformation:type": "AWS::Lambda::Function",
+                  "aws:cdk:cloudformation:props": {
+                    "code": {
+                      "s3Bucket": {
+                        "Fn::Sub": "cdk-hnb659fds-assets-${AWS::AccountId}-${AWS::Region}"
+                      },
+                      "s3Key": "76c8f7633b8e97a459ea4a6264f641e4b4721773df3d2d08831b3454fbb49841.zip"
+                    },
+                    "role": {
+                      "Fn::GetAtt": [
+                        "SSRDashboardDeploymentRoleC1F47D0F",
+                        "Arn"
+                      ]
+                    },
+                    "environment": {
+                      "variables": {
+                        "ACCOUNT_ID": {
+                          "Ref": "AWS::AccountId"
+                        },
+                        "NAMESPACE": "default",
+                        "REGION": {
+                          "Ref": "AWS::Region"
+                        },
+                        "USER_NAME": "<Enter user name here>",
+                        "API_GATEWAY_URL": {
+                          "Fn::ImportValue": "ApiGatewayUrl"
+                        }
+                      }
+                    },
+                    "functionName": "quicksight-ui-function",
+                    "handler": "lambda_function.lambda_handler",
+                    "runtime": "python3.9",
+                    "timeout": 60
+                  }
+                },
+                "constructInfo": {
+                  "fqn": "aws-cdk-lib.aws_lambda.CfnFunction",
+                  "version": "2.77.0"
+                }
+              }
+            },
+            "constructInfo": {
+              "fqn": "aws-cdk-lib.aws_lambda.Function",
+              "version": "2.77.0"
+            }
+          },
+          "CDKMetadata": {
+            "id": "CDKMetadata",
+            "path": "FrontendStack/CDKMetadata",
+            "children": {
+              "Default": {
+                "id": "Default",
+                "path": "FrontendStack/CDKMetadata/Default",
+                "constructInfo": {
+                  "fqn": "aws-cdk-lib.CfnResource",
+                  "version": "2.77.0"
+                }
+              },
+              "Condition": {
+                "id": "Condition",
+                "path": "FrontendStack/CDKMetadata/Condition",
+                "constructInfo": {
+                  "fqn": "aws-cdk-lib.CfnCondition",
+                  "version": "2.77.0"
+                }
+              }
+            },
+            "constructInfo": {
+              "fqn": "constructs.Construct",
+              "version": "10.2.10"
+            }
+          },
+          "BootstrapVersion": {
+            "id": "BootstrapVersion",
+            "path": "FrontendStack/BootstrapVersion",
+            "constructInfo": {
+              "fqn": "aws-cdk-lib.CfnParameter",
+              "version": "2.77.0"
+            }
+          },
+          "CheckBootstrapVersion": {
+            "id": "CheckBootstrapVersion",
+            "path": "FrontendStack/CheckBootstrapVersion",
+            "constructInfo": {
+              "fqn": "aws-cdk-lib.CfnRule",
+              "version": "2.77.0"
+            }
+          }
+        },
+        "constructInfo": {
+          "fqn": "aws-cdk-lib.Stack",
+          "version": "2.77.0"
+        }
+      },
+      "CognitoUpdateStack": {
+        "id": "CognitoUpdateStack",
+        "path": "CognitoUpdateStack",
+        "children": {
+          "CognitoUpdateFunction": {
+            "id": "CognitoUpdateFunction",
+            "path": "CognitoUpdateStack/CognitoUpdateFunction",
+            "children": {
+              "ServiceRole": {
+                "id": "ServiceRole",
+                "path": "CognitoUpdateStack/CognitoUpdateFunction/ServiceRole",
+                "children": {
+                  "ImportServiceRole": {
+                    "id": "ImportServiceRole",
+                    "path": "CognitoUpdateStack/CognitoUpdateFunction/ServiceRole/ImportServiceRole",
+                    "constructInfo": {
+                      "fqn": "aws-cdk-lib.Resource",
+                      "version": "2.77.0"
+                    }
+                  },
+                  "Resource": {
+                    "id": "Resource",
+                    "path": "CognitoUpdateStack/CognitoUpdateFunction/ServiceRole/Resource",
+                    "attributes": {
+                      "aws:cdk:cloudformation:type": "AWS::IAM::Role",
+                      "aws:cdk:cloudformation:props": {
+                        "assumeRolePolicyDocument": {
+                          "Statement": [
+                            {
+                              "Action": "sts:AssumeRole",
+                              "Effect": "Allow",
+                              "Principal": {
+                                "Service": "lambda.amazonaws.com"
+                              }
+                            }
+                          ],
+                          "Version": "2012-10-17"
+                        },
+                        "managedPolicyArns": [
+                          {
+                            "Fn::Join": [
+                              "",
+                              [
+                                "arn:",
+                                {
+                                  "Ref": "AWS::Partition"
+                                },
+                                ":iam::aws:policy/service-role/AWSLambdaBasicExecutionRole"
+                              ]
+                            ]
+                          }
+                        ]
+                      }
+                    },
+                    "constructInfo": {
+                      "fqn": "aws-cdk-lib.aws_iam.CfnRole",
+                      "version": "2.77.0"
+                    }
+                  },
+                  "DefaultPolicy": {
+                    "id": "DefaultPolicy",
+                    "path": "CognitoUpdateStack/CognitoUpdateFunction/ServiceRole/DefaultPolicy",
+                    "children": {
+                      "Resource": {
+                        "id": "Resource",
+                        "path": "CognitoUpdateStack/CognitoUpdateFunction/ServiceRole/DefaultPolicy/Resource",
+                        "attributes": {
+                          "aws:cdk:cloudformation:type": "AWS::IAM::Policy",
+                          "aws:cdk:cloudformation:props": {
+                            "policyDocument": {
+                              "Statement": [
+                                {
+                                  "Action": "cognito-idp:UpdateUserPoolClient",
+                                  "Effect": "Allow",
+                                  "Resource": {
+                                    "Fn::Join": [
+                                      "",
+                                      [
+                                        "arn:aws:cognito-idp:",
+                                        {
+                                          "Ref": "AWS::Region"
+                                        },
+                                        ":",
+                                        {
+                                          "Ref": "AWS::AccountId"
+                                        },
+                                        ":userpool/",
+                                        {
+                                          "Fn::ImportValue": "UserPoolId"
+                                        }
+                                      ]
+                                    ]
+                                  }
+                                }
+                              ],
+                              "Version": "2012-10-17"
+                            },
+                            "policyName": "CognitoUpdateFunctionServiceRoleDefaultPolicyED348111",
+                            "roles": [
+                              {
+                                "Ref": "CognitoUpdateFunctionServiceRole9F5FE43C"
+                              }
+                            ]
+                          }
+                        },
+                        "constructInfo": {
+                          "fqn": "aws-cdk-lib.aws_iam.CfnPolicy",
+                          "version": "2.77.0"
+                        }
+                      }
+                    },
+                    "constructInfo": {
+                      "fqn": "aws-cdk-lib.aws_iam.Policy",
+                      "version": "2.77.0"
+                    }
+                  }
+                },
+                "constructInfo": {
+                  "fqn": "aws-cdk-lib.aws_iam.Role",
+                  "version": "2.77.0"
+                }
+              },
+              "Code": {
+                "id": "Code",
+                "path": "CognitoUpdateStack/CognitoUpdateFunction/Code",
+                "children": {
+                  "Stage": {
+                    "id": "Stage",
+                    "path": "CognitoUpdateStack/CognitoUpdateFunction/Code/Stage",
+                    "constructInfo": {
+                      "fqn": "aws-cdk-lib.AssetStaging",
+                      "version": "2.77.0"
+                    }
+                  },
+                  "AssetBucket": {
+                    "id": "AssetBucket",
+                    "path": "CognitoUpdateStack/CognitoUpdateFunction/Code/AssetBucket",
+                    "constructInfo": {
+                      "fqn": "aws-cdk-lib.aws_s3.BucketBase",
+                      "version": "2.77.0"
+                    }
+                  }
+                },
+                "constructInfo": {
+                  "fqn": "aws-cdk-lib.aws_s3_assets.Asset",
+                  "version": "2.77.0"
+                }
+              },
+              "Resource": {
+                "id": "Resource",
+                "path": "CognitoUpdateStack/CognitoUpdateFunction/Resource",
+                "attributes": {
+                  "aws:cdk:cloudformation:type": "AWS::Lambda::Function",
+                  "aws:cdk:cloudformation:props": {
+                    "code": {
+                      "s3Bucket": {
+                        "Fn::Sub": "cdk-hnb659fds-assets-${AWS::AccountId}-${AWS::Region}"
+                      },
+                      "s3Key": "cc88a40ffb0150cbf53cb8200c986ddd3fdf1f339cc9fcbd88ea9f871a0fe78b.zip"
+                    },
+                    "role": {
+                      "Fn::GetAtt": [
+                        "CognitoUpdateFunctionServiceRole9F5FE43C",
+                        "Arn"
+                      ]
+                    },
+                    "environment": {
+                      "variables": {
+                        "API_GATEWAY_URL": {
+                          "Fn::ImportValue": "ApiGatewayUrl"
+                        },
+                        "COGNITO_CLIENT_ID": {
+                          "Fn::ImportValue": "UserPoolClientId"
+                        },
+                        "COGNITO_USER_POOL_ID": {
+                          "Fn::ImportValue": "UserPoolId"
+                        }
+                      }
+                    },
+                    "functionName": "cognito-user-pool-update-function",
+                    "handler": "cognito_user_pool_update.lambda_handler",
+                    "runtime": "python3.9",
+                    "timeout": 60
+                  }
+                },
+                "constructInfo": {
+                  "fqn": "aws-cdk-lib.aws_lambda.CfnFunction",
+                  "version": "2.77.0"
+                }
+              },
+              "CurrentVersion": {
+                "id": "CurrentVersion",
+                "path": "CognitoUpdateStack/CognitoUpdateFunction/CurrentVersion",
+                "children": {
+                  "Resource": {
+                    "id": "Resource",
+                    "path": "CognitoUpdateStack/CognitoUpdateFunction/CurrentVersion/Resource",
+                    "attributes": {
+                      "aws:cdk:cloudformation:type": "AWS::Lambda::Version",
+                      "aws:cdk:cloudformation:props": {
+                        "functionName": {
+                          "Ref": "CognitoUpdateFunction30576E73"
+                        }
+                      }
+                    },
+                    "constructInfo": {
+                      "fqn": "aws-cdk-lib.aws_lambda.CfnVersion",
+                      "version": "2.77.0"
+                    }
+                  }
+                },
+                "constructInfo": {
+                  "fqn": "aws-cdk-lib.aws_lambda.Version",
+                  "version": "2.77.0"
+                }
+              }
+            },
+            "constructInfo": {
+              "fqn": "aws-cdk-lib.aws_lambda.Function",
+              "version": "2.77.0"
+            }
+          },
+          "CognitoUpdateTrigger": {
+            "id": "CognitoUpdateTrigger",
+            "path": "CognitoUpdateStack/CognitoUpdateTrigger",
+            "children": {
+              "Default": {
+                "id": "Default",
+                "path": "CognitoUpdateStack/CognitoUpdateTrigger/Default",
+                "children": {
+                  "Default": {
+                    "id": "Default",
+                    "path": "CognitoUpdateStack/CognitoUpdateTrigger/Default/Default",
+                    "constructInfo": {
+                      "fqn": "aws-cdk-lib.CfnResource",
+                      "version": "2.77.0"
+                    }
+                  }
+                },
+                "constructInfo": {
+                  "fqn": "aws-cdk-lib.CustomResource",
+                  "version": "2.77.0"
+                }
+              }
+            },
+            "constructInfo": {
+              "fqn": "aws-cdk-lib.triggers.Trigger",
+              "version": "2.77.0"
+            }
+          },
+          "AWSCDK.TriggerCustomResourceProviderCustomResourceProvider": {
+            "id": "AWSCDK.TriggerCustomResourceProviderCustomResourceProvider",
+            "path": "CognitoUpdateStack/AWSCDK.TriggerCustomResourceProviderCustomResourceProvider",
+            "children": {
+              "Staging": {
+                "id": "Staging",
+                "path": "CognitoUpdateStack/AWSCDK.TriggerCustomResourceProviderCustomResourceProvider/Staging",
+                "constructInfo": {
+                  "fqn": "aws-cdk-lib.AssetStaging",
+                  "version": "2.77.0"
+                }
+              },
+              "Role": {
+                "id": "Role",
+                "path": "CognitoUpdateStack/AWSCDK.TriggerCustomResourceProviderCustomResourceProvider/Role",
+                "constructInfo": {
+                  "fqn": "aws-cdk-lib.CfnResource",
+                  "version": "2.77.0"
+                }
+              },
+              "Handler": {
+                "id": "Handler",
+                "path": "CognitoUpdateStack/AWSCDK.TriggerCustomResourceProviderCustomResourceProvider/Handler",
+                "constructInfo": {
+                  "fqn": "aws-cdk-lib.CfnResource",
+                  "version": "2.77.0"
+                }
+              }
+            },
+            "constructInfo": {
+              "fqn": "aws-cdk-lib.CustomResourceProvider",
+              "version": "2.77.0"
+            }
+          },
+          "CDKMetadata": {
+            "id": "CDKMetadata",
+            "path": "CognitoUpdateStack/CDKMetadata",
+            "children": {
+              "Default": {
+                "id": "Default",
+                "path": "CognitoUpdateStack/CDKMetadata/Default",
+                "constructInfo": {
+                  "fqn": "aws-cdk-lib.CfnResource",
+                  "version": "2.77.0"
+                }
+              },
+              "Condition": {
+                "id": "Condition",
+                "path": "CognitoUpdateStack/CDKMetadata/Condition",
+                "constructInfo": {
+                  "fqn": "aws-cdk-lib.CfnCondition",
+                  "version": "2.77.0"
+                }
+              }
+            },
+            "constructInfo": {
+              "fqn": "constructs.Construct",
+              "version": "10.2.10"
+            }
+          },
+          "BootstrapVersion": {
+            "id": "BootstrapVersion",
+            "path": "CognitoUpdateStack/BootstrapVersion",
+            "constructInfo": {
+              "fqn": "aws-cdk-lib.CfnParameter",
+              "version": "2.77.0"
+            }
+          },
+          "CheckBootstrapVersion": {
+            "id": "CheckBootstrapVersion",
+            "path": "CognitoUpdateStack/CheckBootstrapVersion",
+            "constructInfo": {
+              "fqn": "aws-cdk-lib.CfnRule",
+              "version": "2.77.0"
+            }
+          }
+        },
+        "constructInfo": {
+          "fqn": "aws-cdk-lib.Stack",
+          "version": "2.77.0"
+        }
+      },
+      "Tree": {
+        "id": "Tree",
+        "path": "Tree",
+        "constructInfo": {
+          "fqn": "constructs.Construct",
+          "version": "10.2.10"
+        }
+      }
+    },
+    "constructInfo": {
+      "fqn": "aws-cdk-lib.App",
+      "version": "2.77.0"
+    }
+  }
+}

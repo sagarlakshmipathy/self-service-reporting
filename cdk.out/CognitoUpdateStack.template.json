@@ -1,0 +1,480 @@
+{
+ "Resources": {
+  "CognitoUpdateFunctionServiceRole9F5FE43C": {
+   "Type": "AWS::IAM::Role",
+   "Properties": {
+    "AssumeRolePolicyDocument": {
+     "Statement": [
+      {
+       "Action": "sts:AssumeRole",
+       "Effect": "Allow",
+       "Principal": {
+        "Service": "lambda.amazonaws.com"
+       }
+      }
+     ],
+     "Version": "2012-10-17"
+    },
+    "ManagedPolicyArns": [
+     {
+      "Fn::Join": [
+       "",
+       [
+        "arn:",
+        {
+         "Ref": "AWS::Partition"
+        },
+        ":iam::aws:policy/service-role/AWSLambdaBasicExecutionRole"
+       ]
+      ]
+     }
+    ]
+   },
+   "Metadata": {
+    "aws:cdk:path": "CognitoUpdateStack/CognitoUpdateFunction/ServiceRole/Resource"
+   }
+  },
+  "CognitoUpdateFunctionServiceRoleDefaultPolicyED348111": {
+   "Type": "AWS::IAM::Policy",
+   "Properties": {
+    "PolicyDocument": {
+     "Statement": [
+      {
+       "Action": "cognito-idp:UpdateUserPoolClient",
+       "Effect": "Allow",
+       "Resource": {
+        "Fn::Join": [
+         "",
+         [
+          "arn:aws:cognito-idp:",
+          {
+           "Ref": "AWS::Region"
+          },
+          ":",
+          {
+           "Ref": "AWS::AccountId"
+          },
+          ":userpool/",
+          {
+           "Fn::ImportValue": "UserPoolId"
+          }
+         ]
+        ]
+       }
+      }
+     ],
+     "Version": "2012-10-17"
+    },
+    "PolicyName": "CognitoUpdateFunctionServiceRoleDefaultPolicyED348111",
+    "Roles": [
+     {
+      "Ref": "CognitoUpdateFunctionServiceRole9F5FE43C"
+     }
+    ]
+   },
+   "Metadata": {
+    "aws:cdk:path": "CognitoUpdateStack/CognitoUpdateFunction/ServiceRole/DefaultPolicy/Resource"
+   }
+  },
+  "CognitoUpdateFunction30576E73": {
+   "Type": "AWS::Lambda::Function",
+   "Properties": {
+    "Code": {
+     "S3Bucket": {
+      "Fn::Sub": "cdk-hnb659fds-assets-${AWS::AccountId}-${AWS::Region}"
+     },
+     "S3Key": "cc88a40ffb0150cbf53cb8200c986ddd3fdf1f339cc9fcbd88ea9f871a0fe78b.zip"
+    },
+    "Role": {
+     "Fn::GetAtt": [
+      "CognitoUpdateFunctionServiceRole9F5FE43C",
+      "Arn"
+     ]
+    },
+    "Environment": {
+     "Variables": {
+      "API_GATEWAY_URL": {
+       "Fn::ImportValue": "ApiGatewayUrl"
+      },
+      "COGNITO_CLIENT_ID": {
+       "Fn::ImportValue": "UserPoolClientId"
+      },
+      "COGNITO_USER_POOL_ID": {
+       "Fn::ImportValue": "UserPoolId"
+      }
+     }
+    },
+    "FunctionName": "cognito-user-pool-update-function",
+    "Handler": "cognito_user_pool_update.lambda_handler",
+    "Runtime": "python3.9",
+    "Timeout": 60
+   },
+   "DependsOn": [
+    "CognitoUpdateFunctionServiceRoleDefaultPolicyED348111",
+    "CognitoUpdateFunctionServiceRole9F5FE43C"
+   ],
+   "Metadata": {
+    "aws:cdk:path": "CognitoUpdateStack/CognitoUpdateFunction/Resource",
+    "aws:asset:path": "asset.cc88a40ffb0150cbf53cb8200c986ddd3fdf1f339cc9fcbd88ea9f871a0fe78b",
+    "aws:asset:is-bundled": false,
+    "aws:asset:property": "Code"
+   }
+  },
+  "CognitoUpdateFunctionCurrentVersionF048A180b97652a6477fbf13056f1ae741597960": {
+   "Type": "AWS::Lambda::Version",
+   "Properties": {
+    "FunctionName": {
+     "Ref": "CognitoUpdateFunction30576E73"
+    }
+   },
+   "Metadata": {
+    "aws:cdk:path": "CognitoUpdateStack/CognitoUpdateFunction/CurrentVersion/Resource"
+   }
+  },
+  "CognitoUpdateTrigger": {
+   "Type": "Custom::Trigger",
+   "Properties": {
+    "ServiceToken": {
+     "Fn::GetAtt": [
+      "AWSCDKTriggerCustomResourceProviderCustomResourceProviderHandler97BECD91",
+      "Arn"
+     ]
+    },
+    "HandlerArn": {
+     "Ref": "CognitoUpdateFunctionCurrentVersionF048A180b97652a6477fbf13056f1ae741597960"
+    },
+    "InvocationType": "RequestResponse",
+    "Timeout": "120000"
+   },
+   "UpdateReplacePolicy": "Delete",
+   "DeletionPolicy": "Delete",
+   "Metadata": {
+    "aws:cdk:path": "CognitoUpdateStack/CognitoUpdateTrigger/Default/Default"
+   }
+  },
+  "AWSCDKTriggerCustomResourceProviderCustomResourceProviderRoleE18FAF0A": {
+   "Type": "AWS::IAM::Role",
+   "Properties": {
+    "AssumeRolePolicyDocument": {
+     "Version": "2012-10-17",
+     "Statement": [
+      {
+       "Action": "sts:AssumeRole",
+       "Effect": "Allow",
+       "Principal": {
+        "Service": "lambda.amazonaws.com"
+       }
+      }
+     ]
+    },
+    "ManagedPolicyArns": [
+     {
+      "Fn::Sub": "arn:${AWS::Partition}:iam::aws:policy/service-role/AWSLambdaBasicExecutionRole"
+     }
+    ],
+    "Policies": [
+     {
+      "PolicyName": "Inline",
+      "PolicyDocument": {
+       "Version": "2012-10-17",
+       "Statement": [
+        {
+         "Effect": "Allow",
+         "Action": [
+          "lambda:InvokeFunction"
+         ],
+         "Resource": [
+          {
+           "Fn::Join": [
+            "",
+            [
+             {
+              "Fn::GetAtt": [
+               "CognitoUpdateFunction30576E73",
+               "Arn"
+              ]
+             },
+             ":*"
+            ]
+           ]
+          }
+         ]
+        }
+       ]
+      }
+     }
+    ]
+   },
+   "Metadata": {
+    "aws:cdk:path": "CognitoUpdateStack/AWSCDK.TriggerCustomResourceProviderCustomResourceProvider/Role"
+   }
+  },
+  "AWSCDKTriggerCustomResourceProviderCustomResourceProviderHandler97BECD91": {
+   "Type": "AWS::Lambda::Function",
+   "Properties": {
+    "Code": {
+     "S3Bucket": {
+      "Fn::Sub": "cdk-hnb659fds-assets-${AWS::AccountId}-${AWS::Region}"
+     },
+     "S3Key": "e6b302aaee9bb5261338cf6b21e540e805eeaf2c18eb3246f7556104f361f68d.zip"
+    },
+    "Timeout": 900,
+    "MemorySize": 128,
+    "Handler": "__entrypoint__.handler",
+    "Role": {
+     "Fn::GetAtt": [
+      "AWSCDKTriggerCustomResourceProviderCustomResourceProviderRoleE18FAF0A",
+      "Arn"
+     ]
+    },
+    "Runtime": "nodejs16.x"
+   },
+   "DependsOn": [
+    "AWSCDKTriggerCustomResourceProviderCustomResourceProviderRoleE18FAF0A"
+   ],
+   "Metadata": {
+    "aws:cdk:path": "CognitoUpdateStack/AWSCDK.TriggerCustomResourceProviderCustomResourceProvider/Handler",
+    "aws:asset:path": "asset.e6b302aaee9bb5261338cf6b21e540e805eeaf2c18eb3246f7556104f361f68d",
+    "aws:asset:property": "Code"
+   }
+  },
+  "CDKMetadata": {
+   "Type": "AWS::CDK::Metadata",
+   "Properties": {
+    "Analytics": "v2:deflate64:H4sIAAAAAAAA/1WOQQ+CMAyFf4v3UUUOnJXEM0HjlYwxsQJbsnYaQvjvMjAknt73Xtu8HiFN4bCTH4pU3UYdVjBeWapWzFE5drKvagnjxRvFaI3IHmbju3b0y344CZQ9jIXtdEgXzW2Hagh2pUlQUkoizQSnILOHs1et5rMkPYlCk/VOabFM52caNI1gh00zt8BtBZF5Yttvy6Fu479R7uwb63DxMJk1NfLyaT7w05p9AnEM8e5FiJHzhrHXUKz6BUO4CMgcAQAA"
+   },
+   "Metadata": {
+    "aws:cdk:path": "CognitoUpdateStack/CDKMetadata/Default"
+   },
+   "Condition": "CDKMetadataAvailable"
+  }
+ },
+ "Conditions": {
+  "CDKMetadataAvailable": {
+   "Fn::Or": [
+    {
+     "Fn::Or": [
+      {
+       "Fn::Equals": [
+        {
+         "Ref": "AWS::Region"
+        },
+        "af-south-1"
+       ]
+      },
+      {
+       "Fn::Equals": [
+        {
+         "Ref": "AWS::Region"
+        },
+        "ap-east-1"
+       ]
+      },
+      {
+       "Fn::Equals": [
+        {
+         "Ref": "AWS::Region"
+        },
+        "ap-northeast-1"
+       ]
+      },
+      {
+       "Fn::Equals": [
+        {
+         "Ref": "AWS::Region"
+        },
+        "ap-northeast-2"
+       ]
+      },
+      {
+       "Fn::Equals": [
+        {
+         "Ref": "AWS::Region"
+        },
+        "ap-south-1"
+       ]
+      },
+      {
+       "Fn::Equals": [
+        {
+         "Ref": "AWS::Region"
+        },
+        "ap-southeast-1"
+       ]
+      },
+      {
+       "Fn::Equals": [
+        {
+         "Ref": "AWS::Region"
+        },
+        "ap-southeast-2"
+       ]
+      },
+      {
+       "Fn::Equals": [
+        {
+         "Ref": "AWS::Region"
+        },
+        "ca-central-1"
+       ]
+      },
+      {
+       "Fn::Equals": [
+        {
+         "Ref": "AWS::Region"
+        },
+        "cn-north-1"
+       ]
+      },
+      {
+       "Fn::Equals": [
+        {
+         "Ref": "AWS::Region"
+        },
+        "cn-northwest-1"
+       ]
+      }
+     ]
+    },
+    {
+     "Fn::Or": [
+      {
+       "Fn::Equals": [
+        {
+         "Ref": "AWS::Region"
+        },
+        "eu-central-1"
+       ]
+      },
+      {
+       "Fn::Equals": [
+        {
+         "Ref": "AWS::Region"
+        },
+        "eu-north-1"
+       ]
+      },
+      {
+       "Fn::Equals": [
+        {
+         "Ref": "AWS::Region"
+        },
+        "eu-south-1"
+       ]
+      },
+      {
+       "Fn::Equals": [
+        {
+         "Ref": "AWS::Region"
+        },
+        "eu-west-1"
+       ]
+      },
+      {
+       "Fn::Equals": [
+        {
+         "Ref": "AWS::Region"
+        },
+        "eu-west-2"
+       ]
+      },
+      {
+       "Fn::Equals": [
+        {
+         "Ref": "AWS::Region"
+        },
+        "eu-west-3"
+       ]
+      },
+      {
+       "Fn::Equals": [
+        {
+         "Ref": "AWS::Region"
+        },
+        "me-south-1"
+       ]
+      },
+      {
+       "Fn::Equals": [
+        {
+         "Ref": "AWS::Region"
+        },
+        "sa-east-1"
+       ]
+      },
+      {
+       "Fn::Equals": [
+        {
+         "Ref": "AWS::Region"
+        },
+        "us-east-1"
+       ]
+      },
+      {
+       "Fn::Equals": [
+        {
+         "Ref": "AWS::Region"
+        },
+        "us-east-2"
+       ]
+      }
+     ]
+    },
+    {
+     "Fn::Or": [
+      {
+       "Fn::Equals": [
+        {
+         "Ref": "AWS::Region"
+        },
+        "us-west-1"
+       ]
+      },
+      {
+       "Fn::Equals": [
+        {
+         "Ref": "AWS::Region"
+        },
+        "us-west-2"
+       ]
+      }
+     ]
+    }
+   ]
+  }
+ },
+ "Parameters": {
+  "BootstrapVersion": {
+   "Type": "AWS::SSM::Parameter::Value<String>",
+   "Default": "/cdk-bootstrap/hnb659fds/version",
+   "Description": "Version of the CDK Bootstrap resources in this environment, automatically retrieved from SSM Parameter Store. [cdk:skip]"
+  }
+ },
+ "Rules": {
+  "CheckBootstrapVersion": {
+   "Assertions": [
+    {
+     "Assert": {
+      "Fn::Not": [
+       {
+        "Fn::Contains": [
+         [
+          "1",
+          "2",
+          "3",
+          "4",
+          "5"
+         ],
+         {
+          "Ref": "BootstrapVersion"
+         }
+        ]
+       }
+      ]
+     },
+     "AssertDescription": "CDK bootstrap stack version 6 required. Please run 'cdk bootstrap' with a recent version of the CDK CLI."
+    }
+   ]
+  }
+ }
+}
