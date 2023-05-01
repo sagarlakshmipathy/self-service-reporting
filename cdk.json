@@ -1,5 +1,5 @@
 {
-  "app": "python3 self_service_reporting.py",
+  "app": "python3 bin/self_service_reporting.py",
   "watch": {
     "include": [
       "**"
